@@ -10,7 +10,6 @@ trigger AutoCreateTaskForPayment on Payment__c (after insert) {
         }
     }
 
-    System.debug('size :' + paymentListID.size());
     for ( Payment__c pm : [SELECT Id,Name , OwnerId,Payment_date__c FROM Payment__c  WHERE Id in :paymentListID]){
 
         task.Subject = '' + pm.Name;

@@ -1,9 +1,5 @@
 trigger UpdateFinalAmount on Payment__c (after update) {
     
-    // show Old Payment & New Payment
-    System.debug('list Old Payment  :' + trigger.old);
-    System.debug('list New Payment  :' + trigger.new);
-    
     List<String> paymentListID = new List<String>();
     
     for (Payment__c p : trigger.new) {
@@ -11,9 +7,6 @@ trigger UpdateFinalAmount on Payment__c (after update) {
             paymentListID.add(p.Id);
         }		
     }
-    
-    // show list PaymentID
-    System.debug('list ID :' + paymentListID);
 
     // List Payment__c to update
     List<Payment__c> paymentIDs = new List<Payment__c>();
