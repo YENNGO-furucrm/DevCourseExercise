@@ -1,0 +1,49 @@
+@RestResource(urlMapping='/v1/Case/*')
+global with sharing class CustomAPICaseObject {
+
+    @HttpDelete
+    global static void doDelete() {
+        String caseNumber = RestContext.request.params.get('CaseNumber');
+        Case existingCase = [SELECT Id 
+                             FROM Case 
+                             WHERE CaseNumber = :caseNumber];
+        delete existingCase;
+    }
+  
+    @HttpGet
+    global static Case doGet() {
+        String caseNumber = RestContext.request.params.get('CaseNumber');
+        Case result = [SELECT Id, CaseNumber, Subject, Description 
+                FROM Case 
+                WHERE CaseNumber = :caseNumber];
+        return result;
+    }
+  
+  @HttpPost
+    global static String doPost(String status,
+        String origin, String type) {
+        Case cases = new Case();
+        cases.Status = status;
+        cases.Origin = origin;
+        cases.Type = type;
+        insert cases;
+        return cases.Id;
+    }
+    @HttpPatch
+    global static void doPatch() {
+        String caseNumber = RestContext.request.params.get('CaseNumber');
+        Case Cases = [SELECT Id 
+                             FROM Case 
+                             WHERE CaseNumber = :caseNumber];
+        update Cases;
+    }
+
+    @HttpPut
+    global static void doPut() {
+        String caseNumber = RestContext.request.params.get('CaseNumber');
+        Case Cases = [SELECT Id 
+                             FROM Case 
+                             WHERE CaseNumber = :caseNumber];
+        update Cases;
+    }
+}
